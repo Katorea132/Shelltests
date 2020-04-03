@@ -36,11 +36,11 @@ int main (int ac __attribute__((unused)), char **argv)
 			getline(&buffer, &len, stdin);
 			arr = command(buffer);
 			execve(arr[0], arr, NULL);
+			free (arr);
 		}
 		else
 		{
 			wait(NULL);
-			free (arr);
 		}
 		
 	}
