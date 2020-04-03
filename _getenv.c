@@ -1,33 +1,27 @@
-#include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
-
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <string.h>
 extern char **environ;
 
-char *_getenv(const char *name)
+int main (void)
 {
-	int i;
-	char *copy, *val, *name_env;
+	int i, j, k;
+	char const *pizza = "PATH";
+	char *holder;
 
 	for (i = 0; environ[i]; i++)
 	{
-		copy = strdup(environ[i]);
-		name_env = strtok(copy, "=");
-
-		if (strcmp((char *)name, (char *)name_env) == 0)
+		j = strncmp(environ[i], pizza, strlen(pizza));
+		if (j == 0)
 		{
-			val = strtok(NULL, "=");
-			return (val);
+			holder = strdup(environ[i]);
+			for (k = strlen(pizza) + 1; holder[k]; k++)
+				putchar(holder[k]);
+			break;
 		}
 	}
-		return (NULL);
-}
-
-#include <stdlib.h>
-
-int main () 
-{
-    printf("PATH : %s\n", _getenv("PATH"));
-    return(0);
+	return (0);
 }
