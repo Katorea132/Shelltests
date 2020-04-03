@@ -35,15 +35,14 @@ int main (int ac __attribute__((unused)), char **argv)
 		if (piddy == 0)
 		{
 			execve(arr[0], arr, NULL);
-			break;
 		}
 		else
 		{
 			wait(NULL);
-			free (arr);
 			for (i = 0; arr[i]; i++)
 				free (arr[i]);
 			free(buffer);
+			buffer = NULL;
 		}
 		
 	}
