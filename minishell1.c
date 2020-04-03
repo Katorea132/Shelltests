@@ -28,21 +28,22 @@ int main (int ac __attribute__((unused)), char **argv)
 
 	for (; ;)
 	{
+		printf("%s$ ", argv[0]);
+		getline(&buffer, &len, stdin);
+		arr = command(buffer);
 		piddy = fork();
 		if (piddy == 0)
 		{
-			printf("%s$ ", argv[0]);
-			getline(&buffer, &len, stdin);
-			arr = command(buffer);
 			execve(arr[0], arr, NULL);
-			free (arr);
-			for (i = 0; arr[i]; i++)
-				free (arr[i]);
-			free(buffer);
+			break;
 		}
 		else
 		{
 			wait(NULL);
+			free (arr);
+			for (i = 0; arr[i]; i++)
+				free (arr[i]);
+			free(buffer);
 		}
 		
 	}
