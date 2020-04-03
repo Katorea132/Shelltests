@@ -14,17 +14,16 @@ char **command (char *buf)
 	for (i = 0, token = strtok(tmp1, " \n"); token; i++, token = strtok(NULL, " \n"))
 		;
 	free(tmp1);
-	arr = malloc(sizeof(char) * i);
+	arr = malloc(sizeof(char *) * i);
 	for (i = 0, token = strtok(tmp2, " \n"); token; i++, token = strtok(NULL, " \n"))
 		arr[i] = strdup(token);
 	free(tmp2);
-	free(buf);
 	return (arr);	
 }
 int main (int ac __attribute__((unused)), char **argv)
 {
 	char *buffer = 0, **arr;
-	unsigned long int len;
+	unsigned long int len, i;
 	pid_t piddy;
 
 	for (; ;)
@@ -37,6 +36,9 @@ int main (int ac __attribute__((unused)), char **argv)
 			arr = command(buffer);
 			execve(arr[0], arr, NULL);
 			free (arr);
+			for (i = 0; arr[i]; i++)
+				free (arr[i]);
+			free(buffer);
 		}
 		else
 		{
