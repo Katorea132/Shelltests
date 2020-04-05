@@ -1,32 +1,5 @@
+#include "shell.h"
 
-/**
- * _strdupS - Returns a pointer to a newly allocated space in memory
- * @str: Holds the string to be copied
- * Return: a pointer to a char
- */
-char *_strdupS(char *str)
-{
-	char *strc;
-	int i;
-
-	if (str == 0)
-		return (0);
-	for (i = 0; str[i] != 0; i++)
-		;
-	strc = malloc((sizeof(char) * 1) + i);
-	if (strc == 0)
-		return (0);
-	for (i = 0; str[i] != 0; i++)
-		strc[i] = str[i];
-	strc[i] = 0;
-	return (strc);
-}
-/**
- * _strcmpS - compares values of 2 strings
- * @s1: Holds string 1
- * @s2: Holds string 2
- * Return: the value of the comparations
- */
 int _strcmpS(char *s1, char *s2)
 {
 	int a;
