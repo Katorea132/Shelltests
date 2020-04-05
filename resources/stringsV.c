@@ -1,4 +1,4 @@
-#include "shellV.c"
+#include "shellV.h"
 /**
  * _strdup - function that returns a pointer to a newly allocated
  * space in memory
@@ -6,7 +6,7 @@
  * Return: NULL if str = NULL
  */
 
-char *_strdup(char *str)
+char * _strdup(char *str)
 {
 	char *p;
 	unsigned int i, j;
@@ -17,7 +17,7 @@ char *_strdup(char *str)
 	for (i = 0; str[i] != '\0'; i++)
 		;
 	i++;
-	p = malloc(sizeof(char) * i);
+	p = malloc((sizeof(char) * 1 ) + i);
 	if (p == NULL)
 		return (NULL);
 	j = 0;
