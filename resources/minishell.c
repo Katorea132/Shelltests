@@ -35,7 +35,7 @@ int main (int ac __attribute__((unused)), char **argv)
 		write(1, argv[0], strlen(argv[0]));
 		write(1, "$ ", 2);
 		getty = getline(&buffer, &len, stdin);
-		if (getty != -1)
+		if (getty != -1 && buffer[0] != '\n')
 		{
 			arr = command(buffer);
 			if (stat(arr[0], &buf) == 0 && buf.st_mode & S_IXUSR)
