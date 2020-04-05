@@ -15,7 +15,7 @@ char **command (char *buf)
 	for (i = 0, token = strtok(tmp1, " \n"); token; i++)
 		token = strtok(NULL, " \n");
 	free(tmp1);
-	arr = malloc(sizeof(char *) * i);
+	arr = malloc(sizeof(char *) * (i + 1));
 	for (i = 0, token = strtok(tmp2, " \n"); token; i++)
 		arr[i] = strdup(token), token = strtok(NULL, " \n");
 	arr[i] = NULL;
@@ -35,21 +35,23 @@ int main (int ac __attribute__((unused)), char **argv)
 		write(1, argv[0], strlen(argv[0]));
 		write(1, "$ ", 2);
 		getty = getline(&buffer, &len, stdin);
-		arr = command(buffer);
-		if (stat(arr[0], &buf) == 0 && buf.st_mode & S_IXUSR)
+		if (getty != -1)
 		{
-			piddy = fork();
-			if (piddy == 0)
-				execve(arr[0], arr, NULL);
-			else
-				wait(NULL);
+			arr = command(buffer);
+			if (stat(arr[0], &buf) == 0 && buf.st_mode & S_IXUSR)
+			{
+				piddy = fork();
+				if (piddy == 0)
+					execve(arr[0], arr, NULL);
+				else
+					wait(NULL);
+			}
+			for (i = 0; arr[i]; i++)
+				free (arr[i]);
+			free(arr);
 		}
-		for (i = 0; arr[i]; i++)
-			free (arr[i]);
-		free(arr);
 		free(buffer);
-		buffer = NULL;
-		
+		buffer = 0;
 	}
 	return (0);
 }
