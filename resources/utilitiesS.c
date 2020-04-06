@@ -34,6 +34,7 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 	if (getty != -1 && buffer[0] != '\n' && found == 0)
 	{
 		arr = command(buffer);
+		checkPATH(arr[0], &buf);
 		if (stat(arr[0], &buf) == 0 && buf.st_mode & S_IXUSR)
 		{
 			piddy = fork();
