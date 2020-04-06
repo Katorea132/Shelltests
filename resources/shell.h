@@ -26,5 +26,6 @@ char *_memcpyS(char *dest, char *src, unsigned int n);
 /* These are in minishell.c */
 char **command(char *buf);
 void writedol(void);
+void writeErr(char *name, char *comm);
 
 #endif /* of CHELLY */
