@@ -35,7 +35,7 @@ int _atoiS(char *s)
 }
 /**
  * checkPATH - checks for the PATH
- * @arr0z: Holds the array on position 0z
+ * @arr: Holds the array on position 0z
  * @buf: Holds the struct for stat
  * Return: none
  */
