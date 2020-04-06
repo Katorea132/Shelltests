@@ -22,15 +22,16 @@ char *_memcpyS(char *dest, char *src, unsigned int n)
  * @buffer: Holds the string retrieved by getline
  * @arr: Holds the array to put in the commands
  * @argv: Holds the arguments passed to main (only using the name)
+ * @found: boolean to see if enters or not in the function
  * Return: none
  */
-void commandExec(int getty, char *buffer, char **arr, char **argv)
+void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 {
 	pid_t piddy = 0;
 	struct stat buf;
 	unsigned long i = 0;
 
-	if (getty != -1 && buffer[0] != '\n')
+	if (getty != -1 && buffer[0] != '\n' && found == 0)
 	{
 		arr = command(buffer);
 		if (stat(arr[0], &buf) == 0 && buf.st_mode & S_IXUSR)
@@ -49,7 +50,7 @@ void commandExec(int getty, char *buffer, char **arr, char **argv)
 	}
 }
 /**
- * commandExec - Executes the command if it is found
+ * customCmmExec - Executes the command if it is found
  * @getty: Tells whether getline worked or nah
  * @buffer: Holds the string retrieved by getline
  * @arr: Holds the array to put in the commands
@@ -58,6 +59,7 @@ void commandExec(int getty, char *buffer, char **arr, char **argv)
 int customCmmExec(int getty, char *buffer, char **arr)
 {
 	int i;
+
 	if (getty != -1 && buffer[0] != '\n')
 	{
 		arr = command(buffer);
@@ -69,20 +71,29 @@ int customCmmExec(int getty, char *buffer, char **arr)
 			free(arr);
 			return (1);
 		}
-		/*else if (_strcmpS("env", arr[0]) == 0);
+		else if (_strcmpS("env", arr[0]) == 0)
 		{
-			execEnv(arr);
+			execEnv();
+			for (i = 0; arr[i]; i++)
+				free(arr[i]);
+			free(arr);
 			return (1);
-		}*/
+		}
 		for (i = 0; arr[i]; i++)
 			free(arr[i]);
 		free(arr);
 	}
 	return (0);
 }
+/**
+ * execExit - Executes exit
+ * @buffer: Holds the string
+ * @arr: Holds the array of strings
+ * Return: none
+ */
 void execExit(char *buffer, char **arr)
 {
-	int i;
+	int i, j, status;
 
 	for (i = 0; arr[i]; i++)
 		;
@@ -93,5 +104,41 @@ void execExit(char *buffer, char **arr)
 			free(arr[i]);
 		free(arr);
 		exit(0);
+	}
+	else if (i == 2)
+	{
+		for (j = 0; arr[1][j]; j++)
+		{
+			if (arr[1][j] < 48 || arr[1][j] > 57)
+			{
+				write(STDOUT_FILENO, "Usage: exit status\n", 19);
+				return;
+			}
+		}
+		status = _atoiS(arr[1]);
+		free(buffer);
+		for (i = 0; arr[i]; i++)
+			free(arr[i]);
+		free(arr);
+		exit(status);
+	}
+	else
+	{
+	write(STDOUT_FILENO, "Usage: exit status\n", 19);
+	return;
+	}
+}
+/**
+ * execEnv - Executes env
+ * Return: none
+ */
+void execEnv(void)
+{
+	int i;
+
+	for (i = 0; environ[i]; i++)
+	{
+		write(STDOUT_FILENO, environ[i], _strlenS(environ[i]));
+		write(STDOUT_FILENO, "\n", 1);
 	}
 }

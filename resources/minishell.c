@@ -83,8 +83,7 @@ int main(int ac __attribute__((unused)), char **argv)
 		signal(SIGINT, ctrlC);
 		getty = getline(&buffer, &len, stdin);
 		found =  customCmmExec(getty, buffer, arr);
-		putchar(found + '0');
-		commandExec(getty, buffer, arr, argv);
+		commandExec(getty, buffer, arr, argv, found);
 		free(buffer);
 		buffer = 0;
 	}
