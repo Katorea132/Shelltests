@@ -30,7 +30,9 @@ void execExit(char *buffer, char **arr);
 void execEnv(void);
 /* These are inside utilitiesS1.c */
 int _atoiS(char *s);
-void checkPATH(char *arr0z, struct stat *buf);
+void checkPATH(char **arr, struct stat *buf);
+char *_getenv(const char *name);
+char **pathonizer(char *buf);
 /* These are in minishell.c */
 char **command(char *buf);
 void writedol(void);
