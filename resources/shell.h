@@ -1,5 +1,5 @@
-#ifndef SHELLY
-#define SHELLY
+#ifndef CHELLY
+#define CHELLY
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -25,5 +25,6 @@ char *_strpbrkS(char *s, char *accept);
 char *_memcpyS(char *dest, char *src, unsigned int n);
 /* These are in minishell.c */
 char **command(char *buf);
+void writedol(void);
 
-#endif /* of SHELLY */
+#endif /* of CHELLY */

@@ -1,27 +1,54 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
-#include <sys/stat.h>
+#include "shell.h"
+/**
+ * command - Divides the string into commands
+ * @buf: Holds the string
+ * Return: array of strings
+ */
 char **command (char *buf)
 {
 	char *tmp1 = 0, *tmp2 = 0, *token = 0, **arr = 0;
 	int i;
 
-	tmp1 = strdup(buf);
-	tmp2 = strdup(buf);
+	tmp1 = _strdupS(buf);
+	tmp2 = _strdupS(buf);
 	for (i = 0, token = strtok(tmp1, " \n"); token; i++)
 		token = strtok(NULL, " \n");
 	free(tmp1);
 	arr = malloc(sizeof(char *) * (i + 1));
+	if (arr == 0)
+		perror("command function couldn't allocate memory"), exit(2);
 	for (i = 0, token = strtok(tmp2, " \n"); token; i++)
-		arr[i] = strdup(token), token = strtok(NULL, " \n");
+		arr[i] = _strdupS(token), token = strtok(NULL, " \n");
 	arr[i] = NULL;
 	free(tmp2);
 	return (arr);	
 }
+void writedol(void)
+{
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "$ ", 2);
+}
+void writeErr(char *name, char *comm)
+{
+	if (isatty(STDIN_FILENO))
+	{
+		write(STDOUT_FILENO, comm, _strlenS(comm));
+		write(STDOUT_FILENO, ": command not found\n", 20);
+	}
+	else
+	{
+		write(STDOUT_FILENO, name, _strlenS(name));
+		write(STDOUT_FILENO, ": 1: ", 5);
+		write(STDOUT_FILENO, comm, _strlenS(comm));
+		write(STDOUT_FILENO, ": not found\n", 12);
+	}
+}
+/**
+ * main - Main
+ * @ac: Argument count
+ * @argv: arguments
+ * Return: 0 if succeeds, something else if not
+ */
 int main (int ac __attribute__((unused)), char **argv)
 {
 	char *buffer = 0, **arr = 0;
@@ -32,8 +59,7 @@ int main (int ac __attribute__((unused)), char **argv)
 
 	while (getty != -1)
 	{
-		write(1, argv[0], strlen(argv[0]));
-		write(1, "$ ", 2);
+		writedol();
 		getty = getline(&buffer, &len, stdin);
 		if (getty != -1 && buffer[0] != '\n')
 		{
@@ -46,6 +72,8 @@ int main (int ac __attribute__((unused)), char **argv)
 				else
 					wait(NULL);
 			}
+			else
+				writeErr(argv[0], arr[0]);
 			for (i = 0; arr[i]; i++)
 				free (arr[i]);
 			free(arr);

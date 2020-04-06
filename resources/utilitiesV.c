@@ -1,4 +1,4 @@
-#include "shellV.c"
+#include "shellV.h"
 /**
  *_memcpy - copies memory area.
  *@dest: pointer parameter destination
