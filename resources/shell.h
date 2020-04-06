@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <signal.h>
 
 extern char **environ;
 /* These are inside stringS. */
@@ -23,9 +24,13 @@ char *_strncatS(char *dest, char *src, int n);
 char *_strpbrkS(char *s, char *accept);
 /* These are inside utilitiesS.c */
 char *_memcpyS(char *dest, char *src, unsigned int n);
+void commandExec(int getty, char *buffer, char **arr, char **argv);
+int customCmmExec(int getty, char *buffer, char **arr);
+void execExit(char *buffer, char **arr);
 /* These are in minishell.c */
 char **command(char *buf);
 void writedol(void);
 void writeErr(char *name, char *comm);
+void ctrlC(int signal __attribute__((unused)));
 
 #endif /* of CHELLY */
