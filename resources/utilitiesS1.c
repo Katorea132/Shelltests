@@ -136,9 +136,9 @@ int valChecker(char *buffer)
 {
 	int i;
 
-	for(i = 0; buffer[i]; i++)
+	for (i = 0; buffer[i]; i++)
 		if (buffer[i] >= 33 && buffer[i] <= 126)
-			return(0);
+			return (0);
 
-	return(1);
+	return (1);
 }

@@ -55,11 +55,13 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
  * @getty: Tells whether getline worked or nah
  * @buffer: Holds the string retrieved by getline
  * @arr: Holds the array to put in the commands
+ * @chkVal: Holds boolean to dertemine if the code must be executed or not
  * Return: 1 if a built in or 0 if not
  */
 int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
 {
 	int i;
+
 	if (chkVal == 0)
 	{
 		if (getty != -1 && buffer[0] != '\n')
@@ -87,7 +89,7 @@ int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
 		}
 		return (0);
 	}
-	return(1);
+	return (1);
 }
 /**
  * execExit - Executes exit
