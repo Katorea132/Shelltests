@@ -39,7 +39,7 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 		{
 			piddy = fork();
 			if (piddy == 0)
-				execve(arr[0], arr, NULL);
+				execve(arr[0], arr, environ);
 			else
 				wait(NULL);
 		}
