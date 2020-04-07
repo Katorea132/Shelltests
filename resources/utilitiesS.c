@@ -29,7 +29,6 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 {
 	pid_t piddy = 0;
 	struct stat buf;
-	unsigned long i = 0;
 
 	if (getty != -1 && buffer[0] != '\n' && found == 0)
 	{
@@ -45,9 +44,7 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 		}
 		else
 			writeErr(argv[0], arr[0]);
-		for (i = 0; arr[i]; i++)
-			free(arr[i]);
-		free(arr);
+		WilliamWallace(arr);
 	}
 }
 /**
@@ -60,8 +57,6 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
  */
 int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
 {
-	int i;
-
 	if (chkVal == 0)
 	{
 		if (getty != -1 && buffer[0] != '\n')
@@ -70,22 +65,16 @@ int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
 			if (_strcmpS("exit", arr[0]) == 0)
 			{
 				execExit(buffer, arr);
-				for (i = 0; arr[i]; i++)
-					free(arr[i]);
-				free(arr);
+				WilliamWallace(arr);
 				return (1);
 			}
 			else if (_strcmpS("env", arr[0]) == 0)
 			{
 				execEnv();
-				for (i = 0; arr[i]; i++)
-					free(arr[i]);
-				free(arr);
+				WilliamWallace(arr);
 				return (1);
 			}
-			for (i = 0; arr[i]; i++)
-				free(arr[i]);
-			free(arr);
+			WilliamWallace(arr);
 		}
 		return (0);
 	}
@@ -106,9 +95,7 @@ void execExit(char *buffer, char **arr)
 	if (i == 1)
 	{
 		free(buffer);
-		for (i = 0; arr[i]; i++)
-			free(arr[i]);
-		free(arr);
+		WilliamWallace(arr);
 		exit(0);
 	}
 	else if (i == 2)
@@ -123,9 +110,7 @@ void execExit(char *buffer, char **arr)
 		}
 		status = _atoiS(arr[1]);
 		free(buffer);
-		for (i = 0; arr[i]; i++)
-			free(arr[i]);
-		free(arr);
+		WilliamWallace(arr);
 		exit(status);
 	}
 	else

@@ -41,7 +41,7 @@ int _atoiS(char *s)
  */
 void checkPATH(char **arr, struct stat *buf)
 {
-	int i, j;
+	int i;
 	char *conpollo, **lemon, *pathonized, *testy;
 
 	if (stat(arr[0], buf) == 0 && buf->st_mode & S_IXUSR)
@@ -58,9 +58,7 @@ void checkPATH(char **arr, struct stat *buf)
 		if (stat(arr[0], buf) == 0 && buf->st_mode & S_IXUSR)
 		{
 			free(conpollo);
-			for (j = 0; lemon[j]; j++)
-				free(lemon[j]);
-			free(lemon);
+			WilliamWallace(lemon);
 			free(testy);
 			return;
 		}
@@ -69,9 +67,7 @@ void checkPATH(char **arr, struct stat *buf)
 		free(testy);
 		testy = 0;
 	}
-	for (j = 0; lemon[j]; j++)
-		free(lemon[j]);
-	free(lemon);
+	WilliamWallace(lemon);
 	lemon = 0;
 	arr[0] = _strdupS(conpollo);
 	free(testy);
@@ -132,13 +128,13 @@ char **pathonizer(char *buf)
  * @buffer: Holds the buffer
  * Return: 0 if it does, 1 if it doesn't
  */
-int valChecker(char *buffer)
+int valChecker(char *buffer, int getty)
 {
 	int i;
 
-	for (i = 0; buffer[i]; i++)
-		if (buffer[i] >= 33 && buffer[i] <= 126)
-			return (0);
-
+	if (getty != -1)
+		for (i = 0; buffer[i]; i++)
+			if (buffer[i] >= 33 && buffer[i] <= 126)
+				return (0);
 	return (1);
 }

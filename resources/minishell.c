@@ -75,14 +75,14 @@ int main(int ac __attribute__((unused)), char **argv)
 {
 	char *buffer = 0, **arr = 0;
 	unsigned long int len = 0;
-	int getty = 1, found, chkVal;
+	int getty = 1, found, chkVal = 2;
 
 	while (getty != -1)
 	{
 		writedol();
 		signal(SIGINT, ctrlC);
 		getty = getline(&buffer, &len, stdin);
-		chkVal = valChecker(buffer);
+		chkVal = valChecker(buffer, getty);
 		found =  customCmmExec(getty, buffer, arr, chkVal);
 		commandExec(getty, buffer, arr, argv, found);
 		free(buffer);
