@@ -127,3 +127,18 @@ char **pathonizer(char *buf)
 	free(tmp2);
 	return (arr);
 }
+/**
+ * valChecker - Checks if the buffer contains at least one valid value
+ * @buffer: Holds the buffer
+ * Return: 0 if it does, 1 if it doesn't
+ */
+int valChecker(char *buffer)
+{
+	int i;
+
+	for(i = 0; buffer[i]; i++)
+		if (buffer[i] >= 33 && buffer[i] <= 126)
+			return(0);
+
+	return(1);
+}

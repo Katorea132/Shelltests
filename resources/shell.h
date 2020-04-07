@@ -25,7 +25,7 @@ char *_strpbrkS(char *s, char *accept);
 /* These are inside utilitiesS.c */
 char *_memcpyS(char *dest, char *src, unsigned int n);
 void commandExec(int getty, char *buffer, char **arr, char **argv, int found);
-int customCmmExec(int getty, char *buffer, char **arr);
+int customCmmExec(int getty, char *buffer, char **arr, int chkVal);
 void execExit(char *buffer, char **arr);
 void execEnv(void);
 /* These are inside utilitiesS1.c */
@@ -33,6 +33,7 @@ int _atoiS(char *s);
 void checkPATH(char **arr, struct stat *buf);
 char *_getenv(const char *name);
 char **pathonizer(char *buf);
+int valChecker(char *buffer);
 /* These are in minishell.c */
 char **command(char *buf);
 void writedol(void);

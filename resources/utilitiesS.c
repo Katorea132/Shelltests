@@ -57,34 +57,37 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
  * @arr: Holds the array to put in the commands
  * Return: 1 if a built in or 0 if not
  */
-int customCmmExec(int getty, char *buffer, char **arr)
+int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
 {
 	int i;
-
-	if (getty != -1 && buffer[0] != '\n')
+	if (chkVal == 0)
 	{
-		arr = command(buffer);
-		if (_strcmpS("exit", arr[0]) == 0)
+		if (getty != -1 && buffer[0] != '\n')
 		{
-			execExit(buffer, arr);
+			arr = command(buffer);
+			if (_strcmpS("exit", arr[0]) == 0)
+			{
+				execExit(buffer, arr);
+				for (i = 0; arr[i]; i++)
+					free(arr[i]);
+				free(arr);
+				return (1);
+			}
+			else if (_strcmpS("env", arr[0]) == 0)
+			{
+				execEnv();
+				for (i = 0; arr[i]; i++)
+					free(arr[i]);
+				free(arr);
+				return (1);
+			}
 			for (i = 0; arr[i]; i++)
 				free(arr[i]);
 			free(arr);
-			return (1);
 		}
-		else if (_strcmpS("env", arr[0]) == 0)
-		{
-			execEnv();
-			for (i = 0; arr[i]; i++)
-				free(arr[i]);
-			free(arr);
-			return (1);
-		}
-		for (i = 0; arr[i]; i++)
-			free(arr[i]);
-		free(arr);
+		return (0);
 	}
-	return (0);
+	return(1);
 }
 /**
  * execExit - Executes exit

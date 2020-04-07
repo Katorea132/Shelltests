@@ -11,14 +11,14 @@ char **command(char *buf)
 
 	tmp1 = _strdupS(buf);
 	tmp2 = _strdupS(buf);
-	for (i = 0, token = strtok(tmp1, " \n"); token; i++)
-		token = strtok(NULL, " \n");
+	for (i = 0, token = strtok(tmp1, " \n\t\v\f"); token; i++)
+		token = strtok(NULL, " \n\t\v\f");
 	free(tmp1);
 	arr = malloc(sizeof(char *) * (i + 1));
 	if (arr == 0)
 		perror("command function couldn't allocate memory"), exit(2);
-	for (i = 0, token = strtok(tmp2, " \n"); token; i++)
-		arr[i] = _strdupS(token), token = strtok(NULL, " \n");
+	for (i = 0, token = strtok(tmp2, " \n\t\v\f"); token; i++)
+		arr[i] = _strdupS(token), token = strtok(NULL, " \n\t\v\f");
 	arr[i] = NULL;
 	free(tmp2);
 	return (arr);
@@ -75,14 +75,15 @@ int main(int ac __attribute__((unused)), char **argv)
 {
 	char *buffer = 0, **arr = 0;
 	unsigned long int len = 0;
-	int getty = 1, found;
+	int getty = 1, found, chkVal;
 
 	while (getty != -1)
 	{
 		writedol();
 		signal(SIGINT, ctrlC);
 		getty = getline(&buffer, &len, stdin);
-		found =  customCmmExec(getty, buffer, arr);
+		chkVal = valChecker(buffer);
+		found =  customCmmExec(getty, buffer, arr, chkVal);
 		commandExec(getty, buffer, arr, argv, found);
 		free(buffer);
 		buffer = 0;
