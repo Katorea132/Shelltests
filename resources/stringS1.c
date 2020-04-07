@@ -1,5 +1,10 @@
 #include "shell.h"
-
+/**
+ * _strcmpS - compares strings
+ * @s1: String 1
+ * @s2: String 2
+ * Return: 0 if same, different if not
+ */
 int _strcmpS(char *s1, char *s2)
 {
 	int a;
