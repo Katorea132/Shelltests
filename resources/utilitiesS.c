@@ -29,22 +29,25 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 {
 	pid_t piddy = 0;
 	struct stat buf;
+	char *dupHold;
 
 	if (getty != -1 && buffer[0] != '\n' && found == 0)
 	{
 		arr = command(buffer);
-		checkPATH(arr, &buf);
-		if (stat(arr[0], &buf) == 0 && buf.st_mode & S_IXUSR)
+		dupHold = _strdupS(arr[0]);
+		checkPATH(&dupHold, &buf);
+		if (stat(dupHold, &buf) == 0 && buf.st_mode & S_IXUSR)
 		{
 			piddy = fork();
 			if (piddy == 0)
-				execve(arr[0], arr, environ);
+				execve(dupHold, arr, environ);
 			else
 				wait(NULL);
 		}
 		else
 			writeErr(argv[0], arr[0]);
 		WilliamWallace(arr);
+		free(dupHold);
 	}
 }
 /**
