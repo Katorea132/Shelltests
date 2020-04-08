@@ -31,13 +31,13 @@ char *Commentator(int getty, char *buffer)
 		if (!neobuf)
 		{
 			perror("Failed to allocate memory at Commentator");
-			return(0);
+			return (0);
 		}
 		for (j = 0; j < i; j++)
 			neobuf[j] = buffer[j];
 		neobuf[j] = 0;
 		free(buffer);
-		return(neobuf);
+		return (neobuf);
 	}
 	free(buffer);
 	return (0);
