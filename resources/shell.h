@@ -41,6 +41,7 @@ int valChecker(char *buffer, int getty);
 
 /* These are inside utilitiesS2.c */
 void WilliamWallace(char **liberty);
+char *Commentator(int getty, char *buffer);
 
 /* These are in minishell.c */
 char **command(char *buf);
