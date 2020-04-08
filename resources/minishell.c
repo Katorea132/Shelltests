@@ -73,7 +73,7 @@ void ctrlC(int signal __attribute__((unused)))
  */
 int main(int ac __attribute__((unused)), char **argv)
 {
-	char *buffer = 0, **arr = 0;
+	char *buffer = 0, **arr = 0, *neobuf = 0;
 	unsigned long int len = 0;
 	int getty = 1, found, chkVal = 2;
 
@@ -83,9 +83,11 @@ int main(int ac __attribute__((unused)), char **argv)
 		signal(SIGINT, ctrlC);
 		getty = getline(&buffer, &len, stdin);
 		chkVal = valChecker(buffer, getty);
-		found =  customCmmExec(getty, buffer, arr, chkVal);
-		commandExec(getty, buffer, arr, argv, found);
-		free(buffer);
+		neobuf = Commentator(getty, buffer);
+		found =  customCmmExec(getty, neobuf, arr, chkVal);
+		commandExec(getty, neobuf, arr, argv, found);
+		free(neobuf);
+		neobuf = 0;
 		buffer = 0;
 	}
 	return (0);
