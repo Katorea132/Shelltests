@@ -38,22 +38,21 @@ void writedol(void)
  * input comes from an FD associated with terminal or not
  * @name: Name of the program to print
  * @comm: Command given to print
+ * @counter: Command counter
  * Return: none
  */
-void writeErr(char *name, char *comm)
+void writeErr(char *name, char *comm, int counter)
 {
-	if (isatty(STDIN_FILENO))
-	{
-		write(STDOUT_FILENO, comm, _strlenS(comm));
-		write(STDOUT_FILENO, ": command not found\n", 20);
-	}
-	else
-	{
-		write(STDOUT_FILENO, name, _strlenS(name));
-		write(STDOUT_FILENO, ": 1: ", 5);
-		write(STDOUT_FILENO, comm, _strlenS(comm));
-		write(STDOUT_FILENO, ": not found\n", 12);
-	}
+	char *number;
+
+	number = intToStr(counter);
+	write(STDOUT_FILENO, name, _strlenS(name));
+	write(STDOUT_FILENO, ": ", 2);
+	write(STDOUT_FILENO, number, _strlenS(number));
+	write(STDOUT_FILENO, ": ", 2);
+	write(STDOUT_FILENO, comm, _strlenS(comm));
+	write(STDOUT_FILENO, ": not found\n", 12);
+	free(number);
 }
 /**
  * ctrlC - Handles SIGINT Ctrl+C
@@ -74,7 +73,7 @@ void ctrlC(int signal __attribute__((unused)))
 int main(int ac __attribute__((unused)), char **argv)
 {
 	char *buffer = 0, **arr = 0, *neobuf = 0;
-	unsigned long int len = 0;
+	unsigned long int len = 0, counter = 1;
 	int getty = 1, found, chkVal = 2;
 
 	while (getty != -1)
@@ -84,11 +83,12 @@ int main(int ac __attribute__((unused)), char **argv)
 		getty = getline(&buffer, &len, stdin);
 		chkVal = valChecker(buffer, getty);
 		neobuf = Commentator(getty, buffer);
-		found =  customCmmExec(getty, neobuf, arr, chkVal);
-		commandExec(getty, neobuf, arr, argv, found);
+		found =  customCmmExec(getty, neobuf, arr, chkVal, counter, argv);
+		commandExec(getty, neobuf, arr, argv, found, counter);
 		free(neobuf);
 		neobuf = 0;
 		buffer = 0;
+		counter++;
 	}
 	return (0);
 }
