@@ -16,7 +16,7 @@ char **command(char *buf)
 	free(tmp1);
 	arr = malloc(sizeof(char *) * (i + 1));
 	if (arr == 0)
-		perror("command function couldn't allocate memory"), exit(2);
+		perror("command function couldn't allocate memory"), exit(1);
 	for (i = 0, token = strtok(tmp2, " \n\t\v\f"); token; i++)
 		arr[i] = _strdupS(token), token = strtok(NULL, " \n\t\v\f");
 	arr[i] = NULL;
@@ -84,7 +84,8 @@ int main(int ac __attribute__((unused)), char **argv)
 		getty = getline(&buffer, &len, stdin);
 		chkVal = valChecker(buffer, getty);
 		neobuf = Commentator(getty, buffer);
-		found =  customCmmExec(getty, neobuf, arr, chkVal, counter, argv, &statusOut);
+		found =  customCmmExec(getty, neobuf, arr, chkVal, counter,
+		argv, &statusOut);
 		commandExec(getty, neobuf, arr, argv, found, counter, &statusOut);
 		free(neobuf);
 		neobuf = 0;
