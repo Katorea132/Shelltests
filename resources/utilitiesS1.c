@@ -126,6 +126,7 @@ char **pathonizer(char *buf)
 /**
  * valChecker - Checks if the buffer contains at least one valid value
  * @buffer: Holds the buffer
+ * @getty: Tells if getline worked or not
  * Return: 0 if it does, 1 if it doesn't
  */
 int valChecker(char *buffer, int getty)

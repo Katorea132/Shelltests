@@ -23,9 +23,11 @@ char *_memcpyS(char *dest, char *src, unsigned int n)
  * @arr: Holds the array to put in the commands
  * @argv: Holds the arguments passed to main (only using the name)
  * @found: boolean to see if enters or not in the function
+ * @counter: Holds command count
  * Return: none
  */
-void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
+void commandExec(int getty, char *buffer, char **arr, char **argv,
+int found, int counter)
 {
 	pid_t piddy = 0;
 	struct stat buf;
@@ -45,7 +47,7 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
 				wait(NULL);
 		}
 		else
-			writeErr(argv[0], arr[0]);
+			writeErr(argv[0], arr[0], counter);
 		WilliamWallace(arr);
 		free(dupHold);
 	}
@@ -56,9 +58,12 @@ void commandExec(int getty, char *buffer, char **arr, char **argv, int found)
  * @buffer: Holds the string retrieved by getline
  * @arr: Holds the array to put in the commands
  * @chkVal: Holds boolean to dertemine if the code must be executed or not
+ * @counter: Holds command counter
+ * @argv: Holds arguments to main
  * Return: 1 if a built in or 0 if not
  */
-int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
+int customCmmExec(int getty, char *buffer, char **arr, int chkVal, int counter,
+char **argv)
 {
 	if (chkVal == 0)
 	{
@@ -67,7 +72,7 @@ int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
 			arr = command(buffer);
 			if (_strcmpS("exit", arr[0]) == 0)
 			{
-				execExit(buffer, arr);
+				execExit(buffer, arr, counter, argv);
 				WilliamWallace(arr);
 				return (1);
 			}
@@ -87,11 +92,14 @@ int customCmmExec(int getty, char *buffer, char **arr, int chkVal)
  * execExit - Executes exit
  * @buffer: Holds the string
  * @arr: Holds the array of strings
+ * @counter: Holds command counter
+ * @argv: Holds the arguments to main
  * Return: none
  */
-void execExit(char *buffer, char **arr)
+void execExit(char *buffer, char **arr, int counter, char **argv)
 {
 	int i, j, status;
+	char *number;
 
 	for (i = 0; arr[i]; i++)
 		;
@@ -107,7 +115,16 @@ void execExit(char *buffer, char **arr)
 		{
 			if (arr[1][j] < 48 || arr[1][j] > 57)
 			{
-				write(STDOUT_FILENO, "Usage: exit status\n", 19);
+				number = intToStr(counter);
+				write(STDOUT_FILENO, argv[0], _strlenS(argv[0]));
+				write(STDOUT_FILENO, ": ", 2);
+				write(STDOUT_FILENO, number, _strlenS(number));
+				write(STDOUT_FILENO, ": ", 2);
+				write(STDOUT_FILENO, arr[0], _strlenS(arr[0]));
+				write(STDOUT_FILENO, ": Illegal number: ", 18);
+				write(STDOUT_FILENO, arr[1], _strlenS(arr[1]));
+				write(STDOUT_FILENO, "\n", 1);
+				free(number);
 				return;
 			}
 		}
