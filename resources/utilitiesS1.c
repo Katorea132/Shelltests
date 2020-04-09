@@ -55,7 +55,7 @@ void checkPATH(char **arr, struct stat *buf)
 	{
 		testy = str_concatS(lemon[i], "/");
 		arr[0] = str_concatS(testy, conpollo);
-		if (stat(arr[0], buf) == 0 && buf->st_mode & S_IXUSR)
+		if (stat(arr[0], buf) == 0)
 		{
 			free(conpollo);
 			WilliamWallace(lemon);

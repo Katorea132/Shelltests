@@ -56,7 +56,7 @@ int found, int counter, unsigned int *statusOut)
 				
 			}
 		}
-		else if (access(dupHold, X_OK) == -1)
+		else if (stat(dupHold, &buf) == 0 && !(buf.st_mode & S_IXUSR))
 		{
 			writeErrPerm(argv[0], arr[0], counter);
 			*statusOut = 126;
