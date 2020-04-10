@@ -49,28 +49,35 @@ void checkPATH(char **arr, struct stat *buf)
 	conpollo = _strdupS(arr[0]);
 	free(arr[0]);
 	pathonized = _getenv("PATH");
-	lemon = pathonizer(pathonized);
-	free(pathonized);
-	for (i = 0; lemon[i]; i++)
+	if (pathonized != 0 && _strcmpS(pathonized, "") != 0)
 	{
-		testy = str_concatS(lemon[i], "/");
-		arr[0] = str_concatS(testy, conpollo);
-		if (stat(arr[0], buf) == 0)
+		lemon = pathonizer(pathonized);
+		free(pathonized);
+		for (i = 0; lemon[i]; i++)
 		{
-			free(conpollo);
-			WilliamWallace(lemon);
+			testy = str_concatS(lemon[i], "/");
+			arr[0] = str_concatS(testy, conpollo);
+			if (stat(arr[0], buf) == 0)
+			{
+				free(conpollo);
+				WilliamWallace(lemon);
+				free(testy);
+				return;
+			}
+			free(arr[0]);
+			arr[0] = 0;
 			free(testy);
-			return;
+			testy = 0;
 		}
-		free(arr[0]);
-		arr[0] = 0;
+		WilliamWallace(lemon);
+		lemon = 0;
+		arr[0] = _strdupS(conpollo);
 		free(testy);
-		testy = 0;
+		free(conpollo);
 	}
-	WilliamWallace(lemon);
-	lemon = 0;
+	else if (pathonized != 0 && _strcmpS(pathonized, "") != 0)
+		free(pathonized);
 	arr[0] = _strdupS(conpollo);
-	free(testy);
 	free(conpollo);
 }
 /**
