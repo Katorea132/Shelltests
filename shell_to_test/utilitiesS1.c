@@ -75,7 +75,7 @@ void checkPATH(char **arr, struct stat *buf)
 		free(testy);
 		free(conpollo);
 	}
-	else if (pathonized != 0 && _strcmpS(pathonized, "") != 0)
+	else if (pathonized != 0 && _strcmpS(pathonized, "") == 0)
 		free(pathonized);
 	arr[0] = _strdupS(conpollo);
 	free(conpollo);
