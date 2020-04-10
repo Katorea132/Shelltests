@@ -12,6 +12,8 @@
 #include <errno.h>
 
 extern char **environ;
+static char **keys;
+static char **values;
 
 /* These are inside stringS. */
 char *_strdupS(char *str);
@@ -51,8 +53,10 @@ void rev_string(char *s);
 void writeErrPerm(char *name, char *comm, int counter);
 
 /* These are inside utilitiesS3.c */
-void echoinator(char **arr, int *statusOut);
-void decomposer(char **decompositron, int position);
+void echoinator(char **arr, unsigned int *statusOut);
+void decomposer(char **decompositron, unsigned int position);
+void variableinator(char **arr, unsigned int *statusOut,
+int counter, char **argv);
 
 /* These are in minishell.c */
 char **command(char *buf);

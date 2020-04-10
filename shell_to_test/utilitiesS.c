@@ -101,6 +101,12 @@ char **argv, unsigned int *statusOut)
 				*statusOut = 0;
 				return (1);
 			}
+			else if (_strchrS(arr[0], '=') != 0 && arr[0][0] != '=')
+			{
+				variableinator(arr, statusOut, counter, argv);
+				WilliamWallace(arr);
+				return (1);
+			}
 			WilliamWallace(arr);
 		}
 		return (0);
