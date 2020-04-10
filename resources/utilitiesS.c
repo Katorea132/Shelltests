@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <errno.h>
 /**
  * _memcpyS - copies n bytes from a memory area to another
  * @dest: Holds the place to be copied at
@@ -24,14 +25,16 @@ char *_memcpyS(char *dest, char *src, unsigned int n)
  * @argv: Holds the arguments passed to main (only using the name)
  * @found: boolean to see if enters or not in the function
  * @counter: Holds command count
+ * @statusOut: Holds the status of exit
  * Return: none
  */
 void commandExec(int getty, char *buffer, char **arr, char **argv,
-int found, int counter)
+int found, int counter, unsigned int *statusOut)
 {
 	pid_t piddy = 0;
 	struct stat buf;
 	char *dupHold;
+	int status;
 
 	if (getty != -1 && buffer[0] != '\n' && found == 0)
 	{
@@ -44,10 +47,25 @@ int found, int counter)
 			if (piddy == 0)
 				execve(dupHold, arr, environ);
 			else
-				wait(NULL);
+			{
+				wait(&status);
+				if (status != 0)
+					*statusOut = 2;
+				else
+					*statusOut = 0;
+				
+			}
+		}
+		else if (stat(dupHold, &buf) == 0 && !(buf.st_mode & S_IXUSR))
+		{
+			writeErrPerm(argv[0], arr[0], counter);
+			*statusOut = 126;
 		}
 		else
+		{
 			writeErr(argv[0], arr[0], counter);
+			*statusOut = 127;
+		}
 		WilliamWallace(arr);
 		free(dupHold);
 	}
@@ -60,10 +78,11 @@ int found, int counter)
  * @chkVal: Holds boolean to dertemine if the code must be executed or not
  * @counter: Holds command counter
  * @argv: Holds arguments to main
+ * @statusOut: Hold exit status
  * Return: 1 if a built in or 0 if not
  */
 int customCmmExec(int getty, char *buffer, char **arr, int chkVal, int counter,
-char **argv)
+char **argv, unsigned int *statusOut)
 {
 	if (chkVal == 0)
 	{
@@ -72,7 +91,7 @@ char **argv)
 			arr = command(buffer);
 			if (_strcmpS("exit", arr[0]) == 0)
 			{
-				execExit(buffer, arr, counter, argv);
+				execExit(buffer, arr, counter, argv, statusOut);
 				WilliamWallace(arr);
 				return (1);
 			}
@@ -80,6 +99,7 @@ char **argv)
 			{
 				execEnv();
 				WilliamWallace(arr);
+				*statusOut = 0;
 				return (1);
 			}
 			WilliamWallace(arr);
@@ -94,9 +114,11 @@ char **argv)
  * @arr: Holds the array of strings
  * @counter: Holds command counter
  * @argv: Holds the arguments to main
+ * @statusOut: Holds the exit status
  * Return: none
  */
-void execExit(char *buffer, char **arr, int counter, char **argv)
+void execExit(char *buffer, char **arr, int counter, char **argv,
+unsigned int *statusOut)
 {
 	int i, j, status;
 	char *number;
@@ -107,9 +129,9 @@ void execExit(char *buffer, char **arr, int counter, char **argv)
 	{
 		free(buffer);
 		WilliamWallace(arr);
-		exit(0);
+		exit(*statusOut);
 	}
-	else if (i == 2)
+	else if (i > 1)
 	{
 		for (j = 0; arr[1][j]; j++)
 		{
@@ -125,6 +147,7 @@ void execExit(char *buffer, char **arr, int counter, char **argv)
 				write(STDOUT_FILENO, arr[1], _strlenS(arr[1]));
 				write(STDOUT_FILENO, "\n", 1);
 				free(number);
+				*statusOut = 2;
 				return;
 			}
 		}
