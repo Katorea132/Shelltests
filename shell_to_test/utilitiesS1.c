@@ -48,7 +48,7 @@ void checkPATH(char **arr, struct stat *buf)
 		return;
 	conpollo = _strdupS(arr[0]);
 	free(arr[0]);
-	pathonized = _getenv("aguacate");
+	pathonized = _getenv("PATH");
 	if (pathonized != 0 && _strlenS(pathonized) != 0)
 	{
 		lemon = pathonizer(pathonized);
@@ -72,13 +72,21 @@ void checkPATH(char **arr, struct stat *buf)
 		WilliamWallace(lemon);
 		lemon = 0;
 		arr[0] = _strdupS(conpollo);
-		free(testy);
 		free(conpollo);
+		free(testy);
 	}
 	else if (pathonized != 0)
+	{
 		free(pathonized);
-	arr[0] = _strdupS(conpollo);
-	free(conpollo);
+		arr[0] = _strdupS(conpollo);
+		free(conpollo);
+	}
+	else
+	{
+		arr[0] = _strdupS(conpollo);
+		free(conpollo);
+	}
+	
 }
 /**
  * _getenv - Gets the dir of a environ thingie
