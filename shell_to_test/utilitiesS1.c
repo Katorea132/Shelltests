@@ -44,20 +44,16 @@ void checkPATH(char **arr, struct stat *buf)
 	int i;
 	char *conpollo, **lemon, *pathonized, *testy;
 
-	conpollo = _strdupS(arr[0]);
-	free(arr[0]);
+	conpollo = _strdupS(arr[0]), free(arr[0]);
 	pathonized = _getenv("PATH");
 	if (pathonized != 0 && _strlenS(pathonized) != 0)
 	{
-		if (pathonized[5] == ':')
+		if (pathonized[0] == ':' &&
+		stat(conpollo, buf) == 0 && buf->st_mode & S_IXUSR)
 		{
-			if (stat(conpollo, buf) == 0 && buf->st_mode & S_IXUSR)
-			{
-				arr[0] = _strdupS(conpollo);
-				free(pathonized);
-				free(conpollo);
-				return;
-			}
+			arr[0] = _strdupS(conpollo);
+			free(pathonized), free(conpollo);
+			return;
 		}
 		lemon = pathonizer(pathonized);
 		free(pathonized);
@@ -67,34 +63,24 @@ void checkPATH(char **arr, struct stat *buf)
 			arr[0] = str_concatS(testy, conpollo);
 			if (stat(arr[0], buf) == 0)
 			{
-				free(conpollo);
-				WilliamWallace(lemon);
-				free(testy);
+				free(conpollo), free(testy), WilliamWallace(lemon);
 				return;
 			}
-			free(arr[0]);
-			arr[0] = 0;
-			free(testy);
-			testy = 0;
+			free(arr[0]), free(testy), arr[0] = 0, testy = 0;
 		}
-		WilliamWallace(lemon);
-		lemon = 0;
-		arr[0] = _strdupS(conpollo);
-		free(conpollo);
-		free(testy);
+		WilliamWallace(lemon), lemon = 0;
+		arr[0] = _strdupS(conpollo), free(conpollo), free(testy);
 	}
 	else if (pathonized != 0)
 	{
-		free(pathonized);
 		arr[0] = _strdupS(conpollo);
-		free(conpollo);
+		free(conpollo), free(pathonized);
 	}
 	else
 	{
 		arr[0] = _strdupS(conpollo);
 		free(conpollo);
 	}
-	
 }
 /**
  * _getenv - Gets the dir of a environ thingie
