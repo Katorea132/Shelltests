@@ -105,11 +105,11 @@ void writeErrPerm(char *name, char *comm, int counter)
 	char *number;
 
 	number = intToStr(counter);
-	write(STDOUT_FILENO, name, _strlenS(name));
-	write(STDOUT_FILENO, ": ", 2);
-	write(STDOUT_FILENO, number, _strlenS(number));
-	write(STDOUT_FILENO, ": ", 2);
-	write(STDOUT_FILENO, comm, _strlenS(comm));
-	write(STDOUT_FILENO, ": Permission denied\n", 21);
+	write(STDERR_FILENO, name, _strlenS(name));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, number, _strlenS(number));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, comm, _strlenS(comm));
+	write(STDERR_FILENO, ": Permission denied\n", 21);
 	free(number);
 }

@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <errno.h>
 /**
  * _memcpyS - copies n bytes from a memory area to another
  * @dest: Holds the place to be copied at
@@ -39,6 +38,7 @@ int found, int counter, unsigned int *statusOut)
 	if (getty != -1 && buffer[0] != '\n' && found == 0)
 	{
 		arr = command(buffer);
+		echoinator(arr, statusOut);
 		dupHold = _strdupS(arr[0]);
 		checkPATH(&dupHold, &buf);
 		if (stat(dupHold, &buf) == 0 && buf.st_mode & S_IXUSR)
@@ -53,7 +53,6 @@ int found, int counter, unsigned int *statusOut)
 					*statusOut = 2;
 				else
 					*statusOut = 0;
-				
 			}
 		}
 		else if (stat(dupHold, &buf) == 0 && !(buf.st_mode & S_IXUSR))
@@ -138,14 +137,14 @@ unsigned int *statusOut)
 			if (arr[1][j] < 48 || arr[1][j] > 57)
 			{
 				number = intToStr(counter);
-				write(STDOUT_FILENO, argv[0], _strlenS(argv[0]));
-				write(STDOUT_FILENO, ": ", 2);
-				write(STDOUT_FILENO, number, _strlenS(number));
-				write(STDOUT_FILENO, ": ", 2);
-				write(STDOUT_FILENO, arr[0], _strlenS(arr[0]));
-				write(STDOUT_FILENO, ": Illegal number: ", 18);
-				write(STDOUT_FILENO, arr[1], _strlenS(arr[1]));
-				write(STDOUT_FILENO, "\n", 1);
+				write(STDERR_FILENO, argv[0], _strlenS(argv[0]));
+				write(STDERR_FILENO, ": ", 2);
+				write(STDERR_FILENO, number, _strlenS(number));
+				write(STDERR_FILENO, ": ", 2);
+				write(STDERR_FILENO, arr[0], _strlenS(arr[0]));
+				write(STDERR_FILENO, ": Illegal number: ", 18);
+				write(STDERR_FILENO, arr[1], _strlenS(arr[1]));
+				write(STDERR_FILENO, "\n", 1);
 				free(number);
 				*statusOut = 2;
 				return;
@@ -155,11 +154,6 @@ unsigned int *statusOut)
 		free(buffer);
 		WilliamWallace(arr);
 		exit(status);
-	}
-	else
-	{
-	write(STDOUT_FILENO, "Usage: exit status\n", 19);
-	return;
 	}
 }
 /**

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <errno.h>
 
 extern char **environ;
 
@@ -48,6 +49,10 @@ char *Commentator(int getty, char *buffer);
 char *intToStr(unsigned long int num);
 void rev_string(char *s);
 void writeErrPerm(char *name, char *comm, int counter);
+
+/* These are inside utilitiesS3.c */
+void echoinator(char **arr, int *statusOut);
+void decomposer(char **decompositron, int position);
 
 /* These are in minishell.c */
 char **command(char *buf);
