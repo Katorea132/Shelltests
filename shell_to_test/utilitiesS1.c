@@ -44,13 +44,21 @@ void checkPATH(char **arr, struct stat *buf)
 	int i;
 	char *conpollo, **lemon, *pathonized, *testy;
 
-	if (stat(arr[0], buf) == 0 && buf->st_mode & S_IXUSR)
-		return;
 	conpollo = _strdupS(arr[0]);
 	free(arr[0]);
 	pathonized = _getenv("PATH");
 	if (pathonized != 0 && _strlenS(pathonized) != 0)
 	{
+		if (pathonized[5] == ':')
+		{
+			if (stat(conpollo, buf) == 0 && buf->st_mode & S_IXUSR)
+			{
+				arr[0] = _strdupS(conpollo);
+				free(pathonized);
+				free(conpollo);
+				return;
+			}
+		}
 		lemon = pathonizer(pathonized);
 		free(pathonized);
 		for (i = 0; lemon[i]; i++)
