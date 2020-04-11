@@ -12,7 +12,7 @@ void initializer(void)
 		;
 	primer = malloc(sizeof(char *) * (i + 1));
 	for (i = 0; environ[i]; i++)
-		primer = _strdupS(environ[i]);
+		primer[i] = _strdupS(environ[i]);
 	environ[i] = 0;
 }
 /**
@@ -54,7 +54,7 @@ int _setenv(char *key, char *value, int overwrite)
 	}
 	else if (toFree != 0 && overwrite == 1)
 		for (i = 0; environ[i]; i++)
-			if (_strcmpS(key, environ[i] == 0))
+			if (_strcmpS(key, environ[i]) == 0)
 			{
 				free(environ[i]);
 				toUnite = str_concatS(key, "="), environ[i] =  str_concatS(toUnite, value);
