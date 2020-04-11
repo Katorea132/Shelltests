@@ -73,18 +73,19 @@ int _setenv(char *key, char *value, int overwrite)
  */
 int _unsetenv(char *key)
 {
-	int i, j;
-	char *toFree, **toHold;
+	int i, j, unsettler = 0;
+	char **toHold;
 
 	if (key == 0 || _strlenS(key) == 0)
 	{
 		write(STDERR_FILENO, "Name is invalid\n", 16);
 		return (-1);
 	}
-	toFree = _getenv(key);
-	if (toFree != 0)
+	for (i = 0; environ[i]; i++)
+		if (_strcmpS(key, environ[i]) == 0)
+			unsettler = 1;
+	if (unsettler != 0)
 	{
-		free(toFree);
 		for (i = 0; environ[i]; i++)
 			;
 		toHold = malloc(sizeof(char *) * i);
@@ -99,4 +100,50 @@ int _unsetenv(char *key)
 		return (0);
 	}
 	return (0);
+}
+/**
+ * Auxenv - Saves space to call setenv
+ * @arr: Holds the array of arguments
+ * @statusOut: Holds the exit status
+ * Return: none
+ */
+void Auxenv(char **arr, int *statusOut)
+{
+	int a;
+
+	if(arr[1] == 0)
+	{
+		*statusOut = 2;
+		write(STDERR_FILENO, "Name is invalid\n", 16);
+		return;
+	}
+	a = _setenv(arr[1], arr[2], 1);
+	if (a == 0)
+	{
+		*statusOut = 0;
+	}
+	else
+	{
+		*statusOut = 2;
+	}	
+}
+void Auxunenv(char **arr, int *statusOut)
+{
+	int a;
+
+	if(arr[1] == 0)
+	{
+		*statusOut = 2;
+		write(STDERR_FILENO, "Name is invalid\n", 16);
+		return;
+	}
+	a = _unsetenv(arr[1]);
+	if (a == 0)
+	{
+		*statusOut = 0;
+	}
+	else
+	{
+		*statusOut = 2;
+	}	
 }

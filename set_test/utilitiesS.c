@@ -88,24 +88,30 @@ char **argv, unsigned int *statusOut)
 		if (getty != -1 && buffer[0] != '\n')
 		{
 			arr = command(buffer);
-			if (_strcmpS("exit", arr[0]) == 0)
+			if (_strcmpS(arr[0], "exit") == 0)
 			{
-				execExit(buffer, arr, counter, argv, statusOut);
-				WilliamWallace(arr);
+				execExit(buffer, arr, counter, argv, statusOut), WilliamWallace(arr);
 				return (1);
 			}
-			else if (_strcmpS("env", arr[0]) == 0)
+			else if (_strcmpS(arr[0], "env") == 0)
 			{
-				execEnv();
-				WilliamWallace(arr);
-				*statusOut = 0;
+				execEnv(), WilliamWallace(arr), *statusOut = 0;
 				return (1);
 			}
 			else if (_strchrS(arr[0], '=') != 0 && arr[0][0] != '=')
 			{
-				variableinator(arr, statusOut, counter, argv);
-				WilliamWallace(arr);
+				variableinator(arr, statusOut, counter, argv), WilliamWallace(arr);
 				return (1);
+			}
+			else if (_strcmpS(arr[0], "setenv") == 0)
+			{
+				Auxenv(arr, statusOut), WilliamWallace(arr);
+				return (1);
+			}
+			else if (_strcmpS(arr[0], "unsetenv") == 0)
+			{
+				Auxunenv(arr, statusOut), WilliamWallace(arr);
+				return (1);	
 			}
 			WilliamWallace(arr);
 		}
@@ -134,6 +140,7 @@ unsigned int *statusOut)
 	{
 		free(buffer);
 		WilliamWallace(arr);
+		WilliamWallace(environ);
 		exit(*statusOut);
 	}
 	else if (i > 1)
@@ -159,6 +166,7 @@ unsigned int *statusOut)
 		status = _atoiS(arr[1]);
 		free(buffer);
 		WilliamWallace(arr);
+		WilliamWallace(environ);
 		exit(status);
 	}
 }

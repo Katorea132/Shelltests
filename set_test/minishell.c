@@ -76,7 +76,8 @@ int main(int ac __attribute__((unused)), char **argv)
 	unsigned long int len = 0, counter = 1;
 	int getty = 1, found, chkVal = 2;
 	unsigned int statusOut = 0;
-	
+
+	initializer();
 	while (getty != -1)
 	{
 		writedol();
@@ -92,6 +93,7 @@ int main(int ac __attribute__((unused)), char **argv)
 		buffer = 0;
 		counter++;
 	}
+	WilliamWallace(environ);
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "\n", 1);
 	return (statusOut);

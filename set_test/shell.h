@@ -60,6 +60,8 @@ int counter, char **argv);
 void initializer(void);
 int _setenv(char *key, char *value, int overwrite);
 int _unsetenv(char *key);
+void Auxenv(char **arr, int *statusOut);
+void Auxunenv(char **arr, int *statusOut);
 
 /* These are in minishell.c */
 char **command(char *buf);
