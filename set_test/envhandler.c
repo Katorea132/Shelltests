@@ -13,7 +13,8 @@ void initializer(void)
 	primer = malloc(sizeof(char *) * (i + 1));
 	for (i = 0; environ[i]; i++)
 		primer[i] = _strdupS(environ[i]);
-	environ[i] = 0;
+	primer[i] = 0;
+	environ = primer;
 }
 /**
  * _setenv - Sets a variable in a pirate way
@@ -24,20 +25,21 @@ void initializer(void)
  */
 int _setenv(char *key, char *value, int overwrite)
 {
-	char *toFree = _getenv(key), **toHold, *toUnite;
+	char *toFree, **toHold, *toUnite;
 	int i;
 
 	if (key == 0 || _strlenS(key) == 0)
 	{
-		write(STDERR_FILENO, "Name is invalid\n", 13);
+		write(STDERR_FILENO, "Name is invalid\n", 16);
 		return (-1);
 	}
 	for (i = 0; key[i]; i++)
 		if (key[i] == '=')
 		{
-			write(STDERR_FILENO, "Name is invalid\n", 13);
+			write(STDERR_FILENO, "Name is invalid\n", 16);
 			return (-1);
 		}
+	toFree = _getenv(key);
 	if (toFree == 0)
 	{
 		for (i = 0; environ[i]; i++)
@@ -62,5 +64,39 @@ int _setenv(char *key, char *value, int overwrite)
 				return (0);
 			}
 	free(toFree);
+	return (0);
+}
+/**
+ * _unsetenv - Unsets a variable
+ * @key:Key to the value to be unset
+ * Return: Zero on success, -1 on failure
+ */
+int _unsetenv(char *key)
+{
+	int i, j;
+	char *toFree, **toHold;
+
+	if (key == 0 || _strlenS(key) == 0)
+	{
+		write(STDERR_FILENO, "Name is invalid\n", 16);
+		return (-1);
+	}
+	toFree = _getenv(key);
+	if (toFree != 0)
+	{
+		free(toFree);
+		for (i = 0; environ[i]; i++)
+			;
+		toHold = malloc(sizeof(char *) * i);
+		if (toHold == 0)
+			exit(1);
+		for (i = 0, j = 0; environ[i]; i++)
+			if(_strcmpS(key, environ[i]) != 0)
+				toHold[j] = _strdupS(environ[i]), j++;
+		toHold[j] = 0;
+		WilliamWallace(environ);
+		environ = toHold;
+		return (0);
+	}
 	return (0);
 }

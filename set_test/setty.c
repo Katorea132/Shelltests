@@ -39,8 +39,10 @@ void main(void)
 	int i;
 
 	initializer();
-	_setenv("POLLO", "PIZZA", 1);
-	printf("postsetenv\n");
+	_setenv("pollo", "", 0);
+	for (i = 0; environ[i]; i++)
+		printf("%s\n", environ[i]);
+	_unsetenv("aguacate");
 	for (i = 0; environ[i]; i++)
 		printf("%s\n", environ[i]);
 	WilliamWallace(environ);

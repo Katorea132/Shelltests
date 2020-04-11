@@ -59,6 +59,7 @@ int counter, char **argv);
 /* THese are inside envhanderl.c */
 void initializer(void);
 int _setenv(char *key, char *value, int overwrite);
+int _unsetenv(char *key);
 
 /* These are in minishell.c */
 char **command(char *buf);
