@@ -125,7 +125,7 @@ char **pathonizer(char *buf)
 	free(tmp1);
 	arr = malloc(sizeof(char *) * (i + 1));
 	if (arr == 0)
-		perror("pathonizer function couldn't allocate memory"), exit(2);
+	exit(1);
 	for (i = 0, token = strtok(tmp2, ":"); token; i++)
 		arr[i] = _strdupS(token), token = strtok(NULL, ":");
 	arr[i] = NULL;

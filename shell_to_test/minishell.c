@@ -16,7 +16,7 @@ char **command(char *buf)
 	free(tmp1);
 	arr = malloc(sizeof(char *) * (i + 1));
 	if (arr == 0)
-		perror("command function couldn't allocate memory"), exit(1);
+	exit(1);
 	for (i = 0, token = strtok(tmp2, " \n\t\v\f"); token; i++)
 		arr[i] = _strdupS(token), token = strtok(NULL, " \n\t\v\f");
 	arr[i] = NULL;
@@ -76,7 +76,7 @@ int main(int ac __attribute__((unused)), char **argv)
 	unsigned long int len = 0, counter = 1;
 	int getty = 1, found, chkVal = 2;
 	unsigned int statusOut = 0;
-	
+
 	while (getty != -1)
 	{
 		writedol();

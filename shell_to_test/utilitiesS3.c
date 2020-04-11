@@ -71,7 +71,7 @@ int counter, char **argv)
 	}
 	token = strtok(arr[0], "=");
 	if (token == 0)
-		perror("variableinator couldn't allocate memory\n"), exit(1);
+	exit(1);
 	keyHold = _strdupS(token);
 	token = strtok(NULL, "=");
 	if (token == 0)
