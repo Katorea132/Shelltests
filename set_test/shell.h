@@ -56,6 +56,10 @@ void decomposer(char **decompositron, unsigned int position);
 void variableinator(char **arr, unsigned int *statusOut,
 int counter, char **argv);
 
+/* THese are inside envhanderl.c */
+void initializer(void);
+int _setenv(char *key, char *value, int overwrite);
+
 /* These are in minishell.c */
 char **command(char *buf);
 void writedol(void);
