@@ -45,8 +45,8 @@ void decomposer(char **decompositron, unsigned int position)
 	decompositron[position] = _strdupS(gettyenv);
 	free(gettyenv);
 	free(holder);
-	if (decompositron[0] == 0)
-		decompositron[0] = "";
+	if (decompositron[position] == 0)
+		decompositron[position] = _strdupS("");
 }
 /**
  * variableinator - Variableinatices variables
@@ -60,7 +60,7 @@ void variableinator(char **arr, unsigned int *statusOut,
 int counter, char **argv)
 {
 	unsigned int i;
-	char *keyHold, *valueHold, *token;
+	char *keyHold, *token;
 
 	for (i = 0; arr[i]; i++)
 		;
@@ -79,53 +79,5 @@ int counter, char **argv)
 		free(keyHold), *statusOut = 0;
 		return;
 	}
-	valueHold = _strdupS(token);
-	if (valueHold == 0)
-		perror("variableinator couldn't allocate memory\n"), exit(1);
-	echoinador(&valueHold, statusOut);
-
-}
-/**
- * arrainator - Copies and then adds a new element to an array
- * @value: Value to add
- * @picker: Determines which array to modify, 1 keys, 2 values, 3 environ
- * Return: none
- */
-void arrainator(char *value, int picker)
-{
-	unsigned int i;
-	char **replacer;
-
-	if (picker == 1)
-	{
-		for (i = 0; keys[i]; i++)
-			;
-		replacer = malloc(sizeof(char *) * (i + 2));
-		if (replacer == 0)
-			perror("arrainator couldn't allocate memory\n"), exit(1);
-		for (i = 0; keys[i]; i++)
-		{
-			replacer[i] = _strdupS(keys[i]);
-			if (replacer[i] == 0)
-				perror("variableinator couldn't allocate memory\n"), exit(1);
-		}
-		replacer[i + 1] = _strdupS(value);
-		replacer[i + 2] = 0;
-	}
-	else if (picker == 2)
-	{
-		for (i = 0; values[i]; i++)
-			;
-		replacer = malloc(sizeof(char *) * (i + 2));
-		if (replacer == 0)
-			perror("arrainator couldn't allocate memory\n"), exit(1);
-		for (i = 0; values[i]; i++)
-		{
-			replacer[i] = _strdupS(values[i]);
-			if (replacer[i] == 0)
-				perror("variableinator couldn't allocate memory\n"), exit(1);
-		}
-		replacer[i + 1] = _strdupS(value);
-		replacer[i + 2] = 0;
-	}
+	free(keyHold);
 }

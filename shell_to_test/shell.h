@@ -12,8 +12,6 @@
 #include <errno.h>
 
 extern char **environ;
-static char **keys;
-static char **values;
 
 /* These are inside stringS. */
 char *_strdupS(char *str);
