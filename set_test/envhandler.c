@@ -92,7 +92,7 @@ int _unsetenv(char *key)
 		if (toHold == 0)
 			exit(1);
 		for (i = 0, j = 0; environ[i]; i++)
-			if(_strcmpS(key, environ[i]) != 0)
+			if (_strcmpS(key, environ[i]) != 0)
 				toHold[j] = _strdupS(environ[i]), j++;
 		toHold[j] = 0;
 		WilliamWallace(environ);
@@ -111,7 +111,7 @@ void Auxenv(char **arr, int *statusOut)
 {
 	int a;
 
-	if(arr[1] == 0)
+	if (arr[1] == 0)
 	{
 		*statusOut = 2;
 		write(STDERR_FILENO, "Name is invalid\n", 16);
@@ -125,13 +125,19 @@ void Auxenv(char **arr, int *statusOut)
 	else
 	{
 		*statusOut = 2;
-	}	
+	}
 }
+/**
+ * Auxunenv - Saves space to call setenv
+ * @arr: Holds the array of arguments
+ * @statusOut: Holds the exit status
+ * Return: none
+ */
 void Auxunenv(char **arr, int *statusOut)
 {
 	int a;
 
-	if(arr[1] == 0)
+	if (arr[1] == 0)
 	{
 		*statusOut = 2;
 		write(STDERR_FILENO, "Name is invalid\n", 16);
@@ -145,5 +151,5 @@ void Auxunenv(char **arr, int *statusOut)
 	else
 	{
 		*statusOut = 2;
-	}	
+	}
 }

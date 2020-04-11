@@ -111,7 +111,7 @@ char **argv, unsigned int *statusOut)
 			else if (_strcmpS(arr[0], "unsetenv") == 0)
 			{
 				Auxunenv(arr, statusOut), WilliamWallace(arr);
-				return (1);	
+				return (1);
 			}
 			WilliamWallace(arr);
 		}
