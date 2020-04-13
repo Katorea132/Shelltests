@@ -58,6 +58,8 @@ void variableinator(char **arr, unsigned int *statusOut,
 int counter, char **argv);
 void writeCompoundError(char *name, char *command0,
 char *command1, int counter);
+int slsChecker(char *buffer, int getty, int valChecker,
+char **argv, int counter, unsigned int *statusOut);
 
 /* THese are inside envhanderl.c */
 void initializer(void);
