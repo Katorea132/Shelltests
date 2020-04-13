@@ -69,7 +69,8 @@ int found, int counter, unsigned int *statusOut)
 		arr = command(buffer);
 		echoinator(arr, statusOut);
 		dupHold = _strdupS(arr[0]);
-		checkPATH(&dupHold, &buf);
+		if (dupHold[0] != '/')
+			checkPATH(&dupHold, &buf);
 		if (stat(dupHold, &buf) == 0 && buf.st_mode & S_IXUSR)
 		{
 			piddy = fork();
