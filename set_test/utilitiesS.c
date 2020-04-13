@@ -1,20 +1,45 @@
 #include "shell.h"
 /**
- * _memcpyS - copies n bytes from a memory area to another
- * @dest: Holds the place to be copied at
- * @src: Holds the values to be copied
- * @n: Determines the amount of bytes to copy
- * Return: returns a char
+ * dotChecker - Handles special dot cases
+ * @buffer: Recieves the buffer
+ * @getty: Checks if getline worked
+ * @valChecker: CHecks if the given values are valid
+ * Return: 0 on no dot cases, 1 on dot cases.
  */
-char *_memcpyS(char *dest, char *src, unsigned int n)
+int dotChecker(char *buffer, int getty, int valChecker,
+char **argv, int counter)
 {
-	unsigned int b;
+	char **arr;
+	int i;
 
-	for (b = 0; b < n; b++)
+	if (getty != -1 && valChecker == 0)
 	{
-		*(dest + b) = *(src + b);
+		arr = command(buffer);
+		if (arr[0][0] == '.')
+		{
+			if (arr[0][1] == '.' && arr[0][2] == 0)
+			{
+				writeErrPerm(argv[0], arr[0], counter);
+				WilliamWallace(arr);
+				return (1);
+			}
+			else if (arr[0][1] == 0 && arr[1] == 0)
+			{
+				writeErr(argv[0], arr[0], counter);
+				WilliamWallace(arr);
+				return (1);
+			}
+			else if(arr[0][1] == 0 && arr[1] != 0)
+			{
+				writeCompoundError(argv[0], arr[0], arr[1], counter);
+				WilliamWallace(arr);
+				return (1);
+			}
+		}
+		WilliamWallace(arr);
+		return (0);
 	}
-	return (dest);
+	return (1);
 }
 /**
  * commandExec - Executes the command if it is found

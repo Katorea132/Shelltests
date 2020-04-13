@@ -84,6 +84,7 @@ int main(int ac __attribute__((unused)), char **argv)
 		signal(SIGINT, ctrlC);
 		getty = getline(&buffer, &len, stdin);
 		chkVal = valChecker(buffer, getty);
+		chkVal = dotChecker(buffer, getty, chkVal, argv, counter);
 		neobuf = Commentator(getty, buffer);
 		found =  customCmmExec(getty, neobuf, arr, chkVal, counter,
 		argv, &statusOut);
