@@ -105,3 +105,37 @@ int counter)
 	write(STDERR_FILENO, ": not found\n", 12);
 	free(number);
 }
+/**
+ * slsChecker - Checkers for only slashes
+ * @buffer: Holds the get line
+ * @getty: Checks if getline worked
+ * @valChecker: CHecks for previous failed value checkers
+ * @argv: Holds the arguments passed to main
+ * @counter: Holds the line count
+ * @statusOut: Holds the exit status
+ * Return: 0 is passed, 1 if not passed
+ */
+int slsChecker(char *buffer, int getty, int valChecker,
+char **argv, int counter, unsigned int *statusOut)
+{
+	char **arr;
+	unsigned int i;
+
+	if (getty != -1 && valChecker == 0)
+	{
+		arr = command(buffer);
+		for (i = 0; arr[0][i]; i++)
+		{
+			if (arr[0][i] != '/')
+			{
+				WilliamWallace(arr);
+				return (0);
+			}
+		}
+		writeErrPerm(argv[0], arr[0], counter);
+		*statusOut = 126;
+		WilliamWallace(arr);
+		return (1);
+	}
+	return (1);
+}
