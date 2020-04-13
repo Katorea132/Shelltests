@@ -65,34 +65,34 @@ int _strlenS(char *s)
 	return (a);
 }
 /**
- * _strcpyS - copies 1 string into another including the null
- * @dest: Space to put the string
- * @src: Holds the string
- * Return: returns the buffer pointed by dest
+ * _strcmpS - compares strings
+ * @s1: String 1
+ * @s2: String 2
+ * Return: 0 if same, different if not
  */
-char *_strcpyS(char *dest, char *src)
+int _strcmpS(char *s1, char *s2)
 {
 	int a;
 
-	for (a = 0; src[a] != 0; a++)
-		dest[a] = src[a];
-	dest[a] = 0;
-	return (dest);
+	for (a = 0; s1[a] != 0; a++)
+		if (s1[a] < s2[a] || s1[a] > s2[a])
+			return (s1[a] - s2[a]);
+	return (0);
 }
 /**
- * _strcatS - Concatenates 2 strings, overwritting the terminating null
- * @dest: Holds the string 1
- * @src: Holds the string 2
- * Return: Returns chars
+ * _strchrS - Finds a character in a string
+ * @s: Holds the string
+ * @c: Holds the test character
+ * Return: Returns a char pointer
  */
-char *_strcatS(char *dest, char *src)
+char *_strchrS(char *s, char c)
 {
-	int a, b;
-
-	for (a = 0; dest[a] != 0; a++)
-		;
-	for (b = 0; src[b] != 0; b++)
-		dest[a + b] = src[b];
-	dest[a + b] = 0;
-	return (dest);
+	for (; *s != 0; s++)
+	{
+		if (*s == c)
+			return (s);
+		else if (*(s + 1) == c)
+			return (s + 1);
+	}
+	return (0);
 }

@@ -17,14 +17,8 @@ extern char **environ;
 char *_strdupS(char *str);
 char *str_concatS(char *s1, char *s2);
 int _strlenS(char *s);
-char *_strcpyS(char *dest, char *src);
-char *_strcatS(char *dest, char *src);
-
-/* These are inside stringS1. */
 int _strcmpS(char *s1, char *s2);
 char *_strchrS(char *s, char c);
-char *_strncatS(char *dest, char *src, int n);
-char *_strpbrkS(char *s, char *accept);
 
 /* These are inside utilitiesS.c */
 int dotChecker(char *buffer, int getty, int valChecker,
