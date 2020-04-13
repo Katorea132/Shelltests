@@ -107,7 +107,7 @@ int _unsetenv(char *key)
  * @statusOut: Holds the exit status
  * Return: none
  */
-void Auxenv(char **arr, int *statusOut)
+void Auxenv(char **arr, unsigned int *statusOut)
 {
 	int a;
 
@@ -133,7 +133,7 @@ void Auxenv(char **arr, int *statusOut)
  * @statusOut: Holds the exit status
  * Return: none
  */
-void Auxunenv(char **arr, int *statusOut)
+void Auxunenv(char **arr, unsigned int *statusOut)
 {
 	int a;
 

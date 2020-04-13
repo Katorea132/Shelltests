@@ -28,7 +28,7 @@ char *_strpbrkS(char *s, char *accept);
 
 /* These are inside utilitiesS.c */
 int dotChecker(char *buffer, int getty, int valChecker,
-char **argv, int counter);
+char **argv, int counter, unsigned int *statusOut);
 void commandExec(int getty, char *buffer, char **arr, char **argv, int found,
 int counter, unsigned int *statusOut);
 int customCmmExec(int getty, char *buffer, char **arr, int chkVal, int counter,
@@ -63,8 +63,8 @@ char *command1, int counter);
 void initializer(void);
 int _setenv(char *key, char *value, int overwrite);
 int _unsetenv(char *key);
-void Auxenv(char **arr, int *statusOut);
-void Auxunenv(char **arr, int *statusOut);
+void Auxenv(char **arr, unsigned int *statusOut);
+void Auxunenv(char **arr, unsigned int *statusOut);
 
 /* These are in minishell.c */
 char **command(char *buf);

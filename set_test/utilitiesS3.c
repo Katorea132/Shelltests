@@ -89,7 +89,8 @@ int counter, char **argv)
  * @counter: Command counter
  * Return: none
  */
-void writeCompoundError(char *name, char *command0, char *command1, int counter)
+void writeCompoundError(char *name, char *command0, char *command1,
+int counter)
 {
 	char *number;
 

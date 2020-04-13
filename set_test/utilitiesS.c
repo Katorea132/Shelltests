@@ -4,13 +4,15 @@
  * @buffer: Recieves the buffer
  * @getty: Checks if getline worked
  * @valChecker: CHecks if the given values are valid
+ * @argv: Holds thr arguments passed to main
+ * @counter: Holds the command line
+ * @statusOut: Holds the exit status
  * Return: 0 on no dot cases, 1 on dot cases.
  */
 int dotChecker(char *buffer, int getty, int valChecker,
-char **argv, int counter)
+char **argv, int counter, unsigned int *statusOut)
 {
 	char **arr;
-	int i;
 
 	if (getty != -1 && valChecker == 0)
 	{
@@ -21,18 +23,20 @@ char **argv, int counter)
 			{
 				writeErrPerm(argv[0], arr[0], counter);
 				WilliamWallace(arr);
+				*statusOut = 127;
 				return (1);
 			}
 			else if (arr[0][1] == 0 && arr[1] == 0)
 			{
-				writeErr(argv[0], arr[0], counter);
 				WilliamWallace(arr);
+				*statusOut = 0;
 				return (1);
 			}
-			else if(arr[0][1] == 0 && arr[1] != 0)
+			else if (arr[0][1] == 0 && arr[1] != 0)
 			{
 				writeCompoundError(argv[0], arr[0], arr[1], counter);
 				WilliamWallace(arr);
+				*statusOut = 2;
 				return (1);
 			}
 		}
