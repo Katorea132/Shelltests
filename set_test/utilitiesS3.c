@@ -71,7 +71,7 @@ int counter, char **argv)
 	}
 	token = strtok(arr[0], "=");
 	if (token == 0)
-	exit(1);
+		perror("variableinator couldn't allocate memory\n"), exit(1);
 	keyHold = _strdupS(token);
 	token = strtok(NULL, "=");
 	if (token == 0)
@@ -80,4 +80,28 @@ int counter, char **argv)
 		return;
 	}
 	free(keyHold);
+}
+/**
+ * writeCompoundError - Writes a compound error
+ * @name: HOdls the name of the program
+ * @command0: Command 0
+ * @command1: Command 1
+ * @counter: Command counter
+ * Return: none
+ */
+void writeCompoundError(char *name, char *command0, char *command1,
+int counter)
+{
+	char *number;
+
+	number = intToStr(counter);
+	write(STDERR_FILENO, name, _strlenS(name));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, number, _strlenS(number));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, command0, _strlenS(command0));
+	write(STDERR_FILENO, ": ", 2);
+	write(STDERR_FILENO, command1, _strlenS(command1));
+	write(STDERR_FILENO, ": not found\n", 12);
+	free(number);
 }

@@ -27,7 +27,8 @@ char *_strncatS(char *dest, char *src, int n);
 char *_strpbrkS(char *s, char *accept);
 
 /* These are inside utilitiesS.c */
-char *_memcpyS(char *dest, char *src, unsigned int n);
+int dotChecker(char *buffer, int getty, int valChecker,
+char **argv, int counter, unsigned int *statusOut);
 void commandExec(int getty, char *buffer, char **arr, char **argv, int found,
 int counter, unsigned int *statusOut);
 int customCmmExec(int getty, char *buffer, char **arr, int chkVal, int counter,
@@ -55,6 +56,17 @@ void echoinator(char **arr, unsigned int *statusOut);
 void decomposer(char **decompositron, unsigned int position);
 void variableinator(char **arr, unsigned int *statusOut,
 int counter, char **argv);
+void writeCompoundError(char *name, char *command0,
+char *command1, int counter);
+int slsChecker(char *buffer, int getty, int valChecker,
+char **argv, int counter, unsigned int *statusOut);
+
+/* THese are inside envhanderl.c */
+void initializer(void);
+int _setenv(char *key, char *value, int overwrite);
+int _unsetenv(char *key);
+void Auxenv(char **arr, unsigned int *statusOut);
+void Auxunenv(char **arr, unsigned int *statusOut);
 
 /* These are in minishell.c */
 char **command(char *buf);

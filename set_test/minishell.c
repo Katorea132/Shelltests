@@ -16,7 +16,7 @@ char **command(char *buf)
 	free(tmp1);
 	arr = malloc(sizeof(char *) * (i + 1));
 	if (arr == 0)
-	exit(1);
+		perror("command function couldn't allocate memory"), exit(1);
 	for (i = 0, token = strtok(tmp2, " \n\t\v\f"); token; i++)
 		arr[i] = _strdupS(token), token = strtok(NULL, " \n\t\v\f");
 	arr[i] = NULL;
@@ -77,12 +77,15 @@ int main(int ac __attribute__((unused)), char **argv)
 	int getty = 1, found, chkVal = 2;
 	unsigned int statusOut = 0;
 
+	initializer();
 	while (getty != -1)
 	{
 		writedol();
 		signal(SIGINT, ctrlC);
 		getty = getline(&buffer, &len, stdin);
 		chkVal = valChecker(buffer, getty);
+		chkVal = dotChecker(buffer, getty, chkVal, argv, counter, &statusOut);
+		chkVal = slsChecker(buffer, getty, chkVal, argv, counter, &statusOut);
 		neobuf = Commentator(getty, buffer);
 		found =  customCmmExec(getty, neobuf, arr, chkVal, counter,
 		argv, &statusOut);
@@ -92,6 +95,7 @@ int main(int ac __attribute__((unused)), char **argv)
 		buffer = 0;
 		counter++;
 	}
+	WilliamWallace(environ);
 	if (isatty(STDIN_FILENO))
 		write(STDOUT_FILENO, "\n", 1);
 	return (statusOut);

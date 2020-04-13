@@ -1,20 +1,49 @@
 #include "shell.h"
 /**
- * _memcpyS - copies n bytes from a memory area to another
- * @dest: Holds the place to be copied at
- * @src: Holds the values to be copied
- * @n: Determines the amount of bytes to copy
- * Return: returns a char
+ * dotChecker - Handles special dot cases
+ * @buffer: Recieves the buffer
+ * @getty: Checks if getline worked
+ * @valChecker: CHecks if the given values are valid
+ * @argv: Holds thr arguments passed to main
+ * @counter: Holds the command line
+ * @statusOut: Holds the exit status
+ * Return: 0 on no dot cases, 1 on dot cases.
  */
-char *_memcpyS(char *dest, char *src, unsigned int n)
+int dotChecker(char *buffer, int getty, int valChecker,
+char **argv, int counter, unsigned int *statusOut)
 {
-	unsigned int b;
+	char **arr;
 
-	for (b = 0; b < n; b++)
+	if (getty != -1 && valChecker == 0)
 	{
-		*(dest + b) = *(src + b);
+		arr = command(buffer);
+		if (arr[0][0] == '.')
+		{
+			if (arr[0][1] == '.' && arr[0][2] == 0)
+			{
+				writeErrPerm(argv[0], arr[0], counter);
+				WilliamWallace(arr);
+				*statusOut = 127;
+				return (1);
+			}
+			else if (arr[0][1] == 0 && arr[1] == 0)
+			{
+				WilliamWallace(arr);
+				*statusOut = 0;
+				return (1);
+			}
+			else if (arr[0][1] == 0 && arr[1] != 0)
+			{
+				writeCompoundError(argv[0], arr[0], arr[1], counter);
+				WilliamWallace(arr);
+				*statusOut = 2;
+				return (1);
+			}
+		}
+		WilliamWallace(arr);
+		return (0);
 	}
-	return (dest);
+	return (1);
 }
 /**
  * commandExec - Executes the command if it is found
@@ -88,23 +117,29 @@ char **argv, unsigned int *statusOut)
 		if (getty != -1 && buffer[0] != '\n')
 		{
 			arr = command(buffer);
-			if (_strcmpS("exit", arr[0]) == 0)
+			if (_strcmpS(arr[0], "exit") == 0)
 			{
-				execExit(buffer, arr, counter, argv, statusOut);
-				WilliamWallace(arr);
+				execExit(buffer, arr, counter, argv, statusOut), WilliamWallace(arr);
 				return (1);
 			}
-			else if (_strcmpS("env", arr[0]) == 0)
+			else if (_strcmpS(arr[0], "env") == 0)
 			{
-				execEnv();
-				WilliamWallace(arr);
-				*statusOut = 0;
+				execEnv(), WilliamWallace(arr), *statusOut = 0;
 				return (1);
 			}
 			else if (_strchrS(arr[0], '=') != 0 && arr[0][0] != '=')
 			{
-				variableinator(arr, statusOut, counter, argv);
-				WilliamWallace(arr);
+				variableinator(arr, statusOut, counter, argv), WilliamWallace(arr);
+				return (1);
+			}
+			else if (_strcmpS(arr[0], "setenv") == 0)
+			{
+				Auxenv(arr, statusOut), WilliamWallace(arr);
+				return (1);
+			}
+			else if (_strcmpS(arr[0], "unsetenv") == 0)
+			{
+				Auxunenv(arr, statusOut), WilliamWallace(arr);
 				return (1);
 			}
 			WilliamWallace(arr);
@@ -134,6 +169,7 @@ unsigned int *statusOut)
 	{
 		free(buffer);
 		WilliamWallace(arr);
+		WilliamWallace(environ);
 		exit(*statusOut);
 	}
 	else if (i > 1)
@@ -159,6 +195,7 @@ unsigned int *statusOut)
 		status = _atoiS(arr[1]);
 		free(buffer);
 		WilliamWallace(arr);
+		WilliamWallace(environ);
 		exit(status);
 	}
 }
