@@ -1,33 +1,54 @@
 # Simple Shell
 
 ### Description
-Simple UNIX command interpreter. This one has the same output as sh (/bin/sh) as well has the exact same error output.
+The shell is an interactive user interface with an operating system. In this case, it´s a Command-Line Interface (CLI). It takes commands from the user and executes them. 
 
 ### Environmet
 Developed and tested on Ubuntu 14.04 LTS
 
-### Features
-
-### File contents
-
-### Function Descriptions
-
 ### Installation
 Clone this repository and compile all the ".c" files as it's suggested, then run the executable
 
-`$ git clone https://github.com/Katorea132/Shelltests.git`
+`$ git clone https://github.com/valvarezgi/simple_shell.git`
 
 ### Compilation
 For compile the program, enter the following command
 `$ gcc -Wall -Werror -Wextra -pedantic *.c -o hsh`
 
-### Flowchart
+### Syntax
+The syntax for executing commands on this simple shell it's the same as other therminals as sh
+`$ <command> <options> <argument 1> <argument 2> `
 
-### Example
+#### Examples
+##### Interactive Mode:
+
+`$ ls -l`
+
+##### Non-interactive mode:
+
+`$ echo "ls -l" | ./hsh`
+
+###Files
+|File  Name | Content   |
+| ------------ | ------------ |
+|  AUTHORS | Text file with the contribuitor of this project+  |
+|  README.md |  This file  |
+|  changedir.c |  Functions to handled change of directory |
+|  envhandler.c | Funtions to handled the environment |
+|  man_minishell | Manual page   |
+|  minishell.c  | Shell source code  |
+|  shell.h  |  Header file |
+|  stringS.c |  Functions used to handled the strings |
+|  utilitiesS.c | Functions used in our implementation of shell  |
+|  utilitiesS1.c | Functions used in our implementation of shell #1 |
+|  utilitiesS2.c | Functions used in our implementation of shell #2 |
+|  utilitiesS3.c | Functions used in our implementation of shell #3   |
+
 
 ### Authors
 - [Sebastian Escobar](https://github.com/Katorea132 "Sebastian Escobar")
 - [Valeria Alvarez](https://github.com/valvarezgi/ "Valeria Alvarez")
+
 
 
 
