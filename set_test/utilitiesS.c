@@ -69,7 +69,8 @@ int found, int counter, unsigned int *statusOut)
 		arr = command(buffer);
 		echoinator(arr, statusOut);
 		dupHold = _strdupS(arr[0]);
-		checkPATH(&dupHold, &buf);
+		if (dupHold[0] != '/')
+			checkPATH(&dupHold, &buf);
 		if (stat(dupHold, &buf) == 0 && buf.st_mode & S_IXUSR)
 		{
 			piddy = fork();
@@ -78,10 +79,7 @@ int found, int counter, unsigned int *statusOut)
 			else
 			{
 				wait(&status);
-				if (status != 0)
-					*statusOut = 2;
-				else
-					*statusOut = 0;
+				*statusOut = WEXITSTATUS(status);
 			}
 		}
 		else if (stat(dupHold, &buf) == 0 && !(buf.st_mode & S_IXUSR))

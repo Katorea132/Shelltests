@@ -17,14 +17,8 @@ extern char **environ;
 char *_strdupS(char *str);
 char *str_concatS(char *s1, char *s2);
 int _strlenS(char *s);
-char *_strcpyS(char *dest, char *src);
-char *_strcatS(char *dest, char *src);
-
-/* These are inside stringS1. */
 int _strcmpS(char *s1, char *s2);
 char *_strchrS(char *s, char c);
-char *_strncatS(char *dest, char *src, int n);
-char *_strpbrkS(char *s, char *accept);
 
 /* These are inside utilitiesS.c */
 int dotChecker(char *buffer, int getty, int valChecker,
@@ -67,6 +61,15 @@ int _setenv(char *key, char *value, int overwrite);
 int _unsetenv(char *key);
 void Auxenv(char **arr, unsigned int *statusOut);
 void Auxunenv(char **arr, unsigned int *statusOut);
+
+/* These are in changedir.c */
+int cdCustomCmmd(int found, char *buffer, char **arr,
+char **argv, unsigned int *statusOut, int counter);
+void execCd(char **arr, int counter, char **argv,
+unsigned int *statusOut, int chRet);
+void writeCdError(char **arr, int counter, char **argv);
+void writeOptErr(char **arr, int counter, char **argv);
+void execCdPrev(char **arr, int counter, char **argv, unsigned int *statusOut);
 
 /* These are in minishell.c */
 char **command(char *buf);
