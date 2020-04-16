@@ -24,22 +24,17 @@ The syntax for executing commands on this simple shell it's the same as other th
 #### Examples
 ##### Interactive Mode:
 
-`$ ls -l`
-
-`total 84`
-
-`-rw-rw-r-- 1 vagrant vagrant   211 Apr 16 08:49 AUTHORS`
-
-`-rw-rw-r-- 1 vagrant vagrant  3746 Apr 16 08:49 changedir.c`
-
-`-rw-rw-r-- 1 vagrant vagrant  3100 Apr 16 08:49 envhandler.c`
+    $ ls -l
+    total 84
+    -rw-rw-r-- 1 vagrant vagrant   211 Apr 16 08:49 AUTHORS
+    -rw-rw-r-- 1 vagrant vagrant  3746 Apr 16 08:49 changedir.c
+    -rw-rw-r-- 1 vagrant vagrant  3100 Apr 16 08:49 envhandler.c
 
 
 ##### Non-interactive mode:
 
-`$ echo "pwd" | ./hsh`
-
-`$ /home/vagrant/simple_shell`
+    $ echo "pwd" | ./hsh
+    $ /home/vagrant/simple_shell
 
 ### Files
 |File  Name | Content   |
@@ -57,8 +52,6 @@ The syntax for executing commands on this simple shell it's the same as other th
 |  utilitiesS2.c | Functions used in our implementation of shell #2 |
 |  utilitiesS3.c | Functions used in our implementation of shell #3   |
 
-
 ### Authors
 - [Sebastian Escobar](https://github.com/Katorea132 "Sebastian Escobar")
 - [Valeria Alvarez](https://github.com/valvarezgi/ "Valeria Alvarez")
-
