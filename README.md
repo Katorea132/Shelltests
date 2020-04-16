@@ -41,7 +41,7 @@ The syntax for executing commands on this simple shell it's the same as other th
 
 `$ /home/vagrant/simple_shell`
 
-###Files
+### Files
 |File  Name | Content   |
 | ------------ | ------------ |
 |  AUTHORS | Text file with the contribuitor of this project+  |
@@ -57,9 +57,6 @@ The syntax for executing commands on this simple shell it's the same as other th
 |  utilitiesS2.c | Functions used in our implementation of shell #2 |
 |  utilitiesS3.c | Functions used in our implementation of shell #3   |
 
-
-### Used functions
-#### 
 
 ### Authors
 - [Sebastian Escobar](https://github.com/Katorea132 "Sebastian Escobar")
