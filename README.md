@@ -25,15 +25,20 @@ The syntax for executing commands on this simple shell it's the same as other th
 ##### Interactive Mode:
 
 `$ ls -l`
+
 `total 84`
+
 `-rw-rw-r-- 1 vagrant vagrant   211 Apr 16 08:49 AUTHORS`
+
 `-rw-rw-r-- 1 vagrant vagrant  3746 Apr 16 08:49 changedir.c`
+
 `-rw-rw-r-- 1 vagrant vagrant  3100 Apr 16 08:49 envhandler.c`
 
 
 ##### Non-interactive mode:
 
 `$ echo "pwd" | ./hsh`
+
 `$ /home/vagrant/simple_shell`
 
 ###Files
@@ -59,3 +64,4 @@ The syntax for executing commands on this simple shell it's the same as other th
 ### Authors
 - [Sebastian Escobar](https://github.com/Katorea132 "Sebastian Escobar")
 - [Valeria Alvarez](https://github.com/valvarezgi/ "Valeria Alvarez")
+
